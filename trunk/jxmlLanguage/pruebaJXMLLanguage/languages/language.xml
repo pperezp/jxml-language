@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<language name="español">
+    <componente id="1" name="txtRut">
+        Ingrese el rut:
+    </componente>
+    <componente id="2" name="txtNom">
+        Ingrese el nombre:
+    </componente>
+    <componente id="3" name="txtApe">
+        Ingrese el apellido:
+    </componente>
+</language>
