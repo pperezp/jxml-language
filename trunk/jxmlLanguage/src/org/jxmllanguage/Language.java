@@ -60,11 +60,11 @@ public class Language extends File{
             JespXML file = new JespXML(this);
             Tag root = file.leerXML();
             
-            this.name = root.getValorDeAtributo("name");
+            this.name = root.getValorDeAtributo(Dtd.LANGUAGE.getDtdNormalization());
             
             for(Tag component : root.getTagsHijos()){
                 components.add(new Component(
-                        component.getValorDeAtributo("id"),
+                        component.getValorDeAtributo(Dtd.IDENTIFIER.getDtdNormalization()),
                         component.getContenido().trim()
                         ));
             }
@@ -83,8 +83,29 @@ public class Language extends File{
         }
         throw new ValueNotFoundException("Value not found by name \""+id+"\"");
     }
-    
-    public List<Component> getComponents(){
+
+    public List<Component> getComponents() {
         return this.components;
+    }
+    /**
+     * <?xml version='1.0' encoding='UTF-8'?>
+     * <!ELEMENT language (component)+>
+     * <!ATTLIST language name CDATA #IMPLIED>
+     * <!ELEMENT component (#PCDATA)>
+     * <!ATTLIST component id ID #REQUIRED>
+     */
+    public enum Dtd {
+
+        LANGUAGE("name"),
+        IDENTIFIER("id");
+        private final String n;
+
+        Dtd(String n) {
+            this.n = n;
+        }
+
+        public String getDtdNormalization() {
+            return n;
+        }
     }
 }
