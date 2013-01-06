@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <language name="ingles">
     <component id="nombre">name</component>
     <component id="apellido">second name</component>
