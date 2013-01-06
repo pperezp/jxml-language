@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jespxml.JespXML;
+import org.jespxml.excepciones.AtributoNotFoundException;
 import org.jespxml.modelo.Tag;
 import org.jxmllanguage.exceptions.MalformedXMLLanguegeException;
 import org.jxmllanguage.exceptions.ValueNotFoundException;
@@ -60,14 +63,16 @@ public class Language extends File{
             JespXML file = new JespXML(this);
             Tag root = file.leerXML();
             
-            this.name = root.getValorDeAtributo(Dtd.LANGUAGE.getDtdNormalization());
+            this.name = root.getValorDeAtributo(Dtd.NAME);
             
             for(Tag component : root.getTagsHijos()){
                 components.add(new Component(
-                        component.getValorDeAtributo(Dtd.IDENTIFIER.getDtdNormalization()),
+                        component.getValorDeAtributo(Dtd.ID),
                         component.getContenido().trim()
                         ));
             }
+        } catch (AtributoNotFoundException ex) {
+            Logger.getLogger(Language.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException | SAXException ex) {
             throw new MalformedXMLLanguegeException(ex.getMessage());
         } catch (IOException ex) {
@@ -94,18 +99,7 @@ public class Language extends File{
      * <!ELEMENT component (#PCDATA)>
      * <!ATTLIST component id ID #REQUIRED>
      */
-    public enum Dtd {
-
-        LANGUAGE("name"),
-        IDENTIFIER("id");
-        private final String n;
-
-        Dtd(String n) {
-            this.n = n;
-        }
-
-        public String getDtdNormalization() {
-            return n;
-        }
+    private enum Dtd {
+        NAME, ID
     }
 }
