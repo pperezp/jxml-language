@@ -8,7 +8,7 @@ package org.jxmllanguage.model;
  *
  * @author pato
  */
-public class Component {
+public class Component implements Comparable{
     private String id;
     private String value;
 
@@ -37,6 +37,10 @@ public class Component {
     public void setValue(String value) {
         this.value = value;
     }
-    
-    
+
+    @Override
+    public int compareTo(Object o) {
+        Component c = (Component) o;
+        return (c.getId().toLowerCase().compareTo(this.getId().toLowerCase())) *-1;
+    }
 }
